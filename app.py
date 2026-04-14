@@ -110,11 +110,7 @@ if uploaded_files:
         # 🔥 Apply Score-Based Fix
         final_prediction = rule_based_fix(cleaned, prediction)
 
-        # Confidence (decision function)
-        confidence = "N/A"
-        if hasattr(model, "decision_function"):
-            scores = model.decision_function(vector)[0]
-            confidence = round(max(scores), 2)
+       
 
         # Skills
         skills = extract_skills(cleaned)
