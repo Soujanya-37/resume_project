@@ -15,8 +15,8 @@ skills_list = skills_df["Skill"].tolist()
 
 # --------------------------------------------
 # UI
-st.set_page_config(page_title="AI Resume Analyzer", layout="wide")
-st.title("Resume Classifier")
+st.set_page_config(page_title="Resume Analyzer AI", layout="wide")
+st.title("Resume Analyzer AI")
 
 # --------------------------------------------
 # TEXT EXTRACTION
@@ -46,7 +46,7 @@ def clean_text(text):
     return text
 
 # --------------------------------------------
-# 🔥 SCORE-BASED ROLE FIX (ALL CATEGORIES)
+# RULE-BASED ROLE FIX
 def rule_based_fix(text, prediction):
     text = text.lower()
 
@@ -66,7 +66,6 @@ def rule_based_fix(text, prediction):
 
     best_role = max(scores, key=scores.get)
 
-    # Only override if strong match
     if scores[best_role] >= 2:
         return best_role
 
@@ -107,19 +106,16 @@ if uploaded_files:
         vector = vectorizer.transform([cleaned])
         prediction = model.predict(vector)[0]
 
-        # 🔥 Apply Score-Based Fix
+        # Apply Rule-Based Fix
         final_prediction = rule_based_fix(cleaned, prediction)
 
-       
-
-        # Skills
+        # Extract Skills
         skills = extract_skills(cleaned)
 
         results.append({
             "File": file.name,
             "Role": final_prediction,
-            "Confidence": confidence,
-            "Skills": ", ".join(skills)
+            "Skills": ", ".join(skills) if skills else "No skills detected"
         })
 
     df = pd.DataFrame(results)
