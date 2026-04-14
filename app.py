@@ -15,8 +15,8 @@ skills_list = skills_df["Skill"].tolist()
 
 # --------------------------------------------
 # UI
-st.set_page_config(page_title="Resume Analyzer AI", layout="wide")
-st.title("Resume Analyzer AI")
+st.set_page_config(page_title="Resume Classifier", layout="wide")
+st.title("Resume Classifier")
 
 # --------------------------------------------
 # TEXT EXTRACTION
